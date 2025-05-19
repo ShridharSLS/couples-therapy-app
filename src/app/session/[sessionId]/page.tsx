@@ -1,15 +1,13 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 // Import exercise data
 import exerciseData from '../../../data/exercises.json'
 
-export default function SessionPage({ params }: { params: { sessionId: string } }) {
+export default function SessionPage() {
   const router = useRouter()
-  const { sessionId } = params
+  const { sessionId } = router.query as { sessionId: string }
   const [exercises, setExercises] = useState<any[]>([])
   
   useEffect(() => {

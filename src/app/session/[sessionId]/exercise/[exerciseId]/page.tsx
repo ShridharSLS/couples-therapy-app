@@ -1,19 +1,13 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
 // Import exercise data
 import exerciseData from '../../../../../data/exercises.json'
 
-export default function ExercisePage({ 
-  params 
-}: { 
-  params: { sessionId: string; exerciseId: string } 
-}) {
+export default function ExercisePage() {
   const router = useRouter()
-  const { sessionId, exerciseId } = params
+  const { sessionId, exerciseId } = router.query as { sessionId: string; exerciseId: string }
   
   const [exercise, setExercise] = useState<any>(null)
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
