@@ -90,8 +90,16 @@ const ExercisePage = () => {
     }
   }
   
+  // Define a type for history items
+  type HistoryItem = {
+    stepIndex: number;
+    activity: string;
+    partner1: string | null;
+    partner2: string | null;
+  };
+  
   // Filter function to get non-empty history items
-  const getFilteredHistory = () => {
+  const getFilteredHistory = (): HistoryItem[] => {
     // Only include steps before the current step
     return Object.entries(partnerInputs)
       .map(([index, inputs]) => {
@@ -112,7 +120,7 @@ const ExercisePage = () => {
         }
         return null;
       })
-      .filter(item => item !== null);
+      .filter((item): item is HistoryItem => item !== null);
   };
 
   const goToPreviousStep = () => {
