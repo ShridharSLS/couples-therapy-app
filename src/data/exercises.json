@@ -1,0 +1,234 @@
+[
+  {
+    "id": "summary-validation",
+    "title": "Summary and Validation",
+    "description": "Learn to listen, understand and validate your partner's experience",
+    "steps": [
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Observation",
+        "Description": "Here you describe the situation or partner's behavior. Only share things that can be observed by a camera. Main goal is to describe your observation as neutrally as you can, without any sort of negative judgments. If your description can be interpreted negatively, it's a mistake. ",
+        "How much?": "1-2 lines",
+        "Language": "I observed/heard...",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Story",
+        "Description": "As you observed the behavior what was the story in your mind. You must present it as your point of view, not the objective truth. So every time you're trying to make a statement about the situation or your partner's behavior, start the sentence with the right language...",
+        "How much?": "1-2 lines",
+        "Language": "The story in my mind was... ; I took it as... ; My interpretation was...",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Feelings",
+        "Description": "This is where you describe your feelings and emotions. If you need help finding the right words, refer to the emotion chart",
+        "How much?": "3-4 words",
+        "Language": "I felt...",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Summary",
+        "Description": "This is where you summarise the observation, story and feelings of the partner in their words. ",
+        "How much?": "1-2 lines",
+        "Language": "I heard...\n... Have I heard you right?",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Validation",
+        "Description": "This is where you make them feel their experience is valid. You make them feel they not crazy. You make them feel there's some real value in their perspective. This doesn't necessarily mean you agree with them or will comply with what they want you to do. This simply means you are giving equal respect to their point of view and experience. ",
+        "How much?": "3-4 lines. More the better.",
+        "Language": "I understand it all because... \n.... hence, what you're experiencing is understandable.",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Exploring",
+        "Description": "This is where you ask questions to understand the partner's experience deeper. The questions must not come from a place of challenging or refuting your partner. The questions must truly be from place of curiosity to know the background of your partner",
+        "How much?": "1-2 lines",
+        "Language": "why? What does that mean to you? why is it important to you? Tell me more?",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "My behavior",
+        "Description": "Now, the partner who's behavior was observed. They simply repeat the behavior being talked about to establish the topic again",
+        "How much?": "1 line",
+        "Language": "You observed.... (this behavior)",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Story behind behavior",
+        "Description": "What were my thoughts, feelings, needs behind that behavior. Why it happened? How much is it healthy unhealthy will be disucssed in the next milestone, for now the context must be understood. ",
+        "How much?": "2-3 lines",
+        "Language": "My thoughts at the time was....\nMy reasons/intentions for doing that was...",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Feelings behind behavior",
+        "Description": "This is where you describe your feelings and emotions behind your behavior i.e. your mental state. If you need help finding the right words, refer to the emotion chart",
+        "How much?": "1-2 lines",
+        "Language": "My feelings at the time were... At the time I was going through.... ",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Summary",
+        "Description": "This is where you summarise the observation, story and feelings of the partner in their words. ",
+        "How much?": "1-2 lines",
+        "Language": "I heard...\n... Have I heard you right?",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Validation",
+        "Description": "This is where you make them feel their experience is valid. You make them feel they not crazy. You make them feel there's some real value in their perspective. This doesn't necessarily mean you agree with them or will comply with what they want you to do. This simply means you are giving equal respect to their point of view and experience. ",
+        "How much?": "3-4 lines. More the better.",
+        "Language": "I understand it all because... \n.... hence, what you're experiencing is understandable.",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Exploring",
+        "Description": "This is where you ask questions to understand the partner's experience deeper. The questions must not come from a place of challenging or refuting your partner. The questions must truly be from place of curiosity to know the background of your partner",
+        "How much?": "1-2 lines",
+        "Language": "why? What does that mean to you? why is it important to you? Tell me more?",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Values missed",
+        "Description": "These are the values, rules or principles that I had agreed upon but couldn't live up to. As you come up with new values, make a note of them in the values list. ",
+        "How much?": "As many as possible",
+        "Language": "The values that I couldn't live upto are...",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Impact on other",
+        "Description": "This is where you acknowledge how your behavior contributed to some pain or negative experience for the other. Basically, here you're connecting their feelings to your behavior. Refer to the Feelings sheet to find suitable words. ",
+        "How much?": "As many as possible",
+        "Language": "My behavior/words/reaction must have made you feel.... (their pain)",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Regret",
+        "Description": "This is a very clear acknowledgement of regret and remorse. You're expressing you feel bad as a result of them feeling bad and how wish it shouldn't have happened. ",
+        "How much?": "As many as possible",
+        "Language": "I regret my contribution to your pain ; I apologise for what you had to go through because of me",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Change",
+        "Description": "This is where you give your partner a clear picture of how in future you'll live up to those values. What will think differently and what will you do differently. Go in as much detail as possible to address as many root causes behind why you were not able to live up to the values?",
+        "How much?": "As many as possible",
+        "Language": "In future, what I'll do different is... (this). ; I will make sure to live up to these values...",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Undo criticism/contempt",
+        "Description": "Balance blame/criticism/contempt with the actual neutral positive view and general fondness and admiration. with examples. ",
+        "How much?": "As many as possible",
+        "Language": "I said (that) when I was upset, but I don't mean it. What I really think is this... (neutral and positive view)",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Acceptance",
+        "Description": "Here you show how you accept the person overall despite the limitations.",
+        "How much?": "Verbatim",
+        "Language": "We both have our strengths and weaknesses. I believe that you're trying your best. You mean well. Even though we both can do better for each other and the relationship, I accept you for who you are today.",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      },
+      {
+        "Activity": "Emotion Temp. Check",
+        "Description": "You tell where you are in terms of emotion escalation. 0 being completely calm/peaceful. 10 being extremely upset/angry/overwhelmed. ",
+        "How much?": "1 word (number)",
+        "Language": "I'm at..",
+        "Partner 1 text input": "",
+        "Partner 2 text input": "",
+        "Finished (checkbox)?": false
+      }
+    ]
+  }
+]
