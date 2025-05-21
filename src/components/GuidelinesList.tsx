@@ -8,6 +8,21 @@ interface Guideline {
   display_order?: number;
 }
 
+// Define the structure of the Supabase response
+interface StepGuidelineResponse {
+  guideline_id: string;
+  display_order: number;
+  guidelines: {
+    id: string;
+    title: string;
+    content: string;
+  } | Array<{
+    id: string;
+    title: string;
+    content: string;
+  }>;
+}
+
 interface GuidelinesListProps {
   stepId: string;
   className?: string;
@@ -44,12 +59,17 @@ const GuidelinesList: React.FC<GuidelinesListProps> = ({ stepId, className = '' 
         }
 
         // Transform the data to get a clean guidelines array
-        const formattedGuidelines = data.map(item => ({
-          id: item.guidelines.id,
-          title: item.guidelines.title,
-          content: item.guidelines.content,
-          display_order: item.display_order
-        }));
+        const formattedGuidelines = data.map(item => {
+          // Handle case where guidelines is an array (take first item) or an object
+          const guideline = Array.isArray(item.guidelines) ? item.guidelines[0] : item.guidelines;
+          
+          return {
+            id: guideline.id,
+            title: guideline.title,
+            content: guideline.content,
+            display_order: item.display_order
+          };
+        });
 
         setGuidelines(formattedGuidelines);
       } catch (err: any) {
