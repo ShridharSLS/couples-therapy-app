@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { supabase } from '../../../../../lib/supabaseClient'
 // Import sessionStorage utilities for user responses
 import { saveStepResponse, getAllExerciseResponses } from '../../../../../utils/sessionStorage'
+// Import guideline components
+import GuidelineLinks, { Guideline } from '../../../../../components/GuidelineLinks'
+import GuidelineModal from '../../../../../components/GuidelineModal'
 
 // Define types for our exercise and response data
 type InputType = 'text' | 'checkbox' | '';
@@ -55,6 +58,11 @@ const ExercisePage = () => {
   const [isLargeScreen, setIsLargeScreen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  
+  // Guidelines state
+  const [stepGuidelines, setStepGuidelines] = useState<{[key: number]: Guideline[]}>({})  
+  const [selectedGuideline, setSelectedGuideline] = useState<Guideline | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   
   useEffect(() => {
     // Check for window size on client-side only
@@ -113,26 +121,121 @@ const ExercisePage = () => {
             throw stepsError
           }
           
-          // Combine exercise with its steps
-          const fullExercise = {
-            ...exerciseData,
-            steps: stepsData || []
-          } as Exercise
-          setExercise(fullExercise)
+          // Fetch guidelines for each step
+          const stepIds = stepsData?.map(step => step.id) || [];
+          console.log('Step IDs for guideline fetch:', stepIds);
           
-          // Create initial inputs object with empty responses for each step
-          const initialInputs: {[key: string]: PartnerResponse} = {}
-          fullExercise.steps.forEach((step: ExerciseStep, index: number) => {
-            initialInputs[index] = {
-              // Initialize with empty values based on the input types
-              partner1Text: step.partner1_input_type === 'text' ? '' : undefined,
-              partner2Text: step.partner2_input_type === 'text' ? '' : undefined,
-              partner1Checkbox: step.partner1_input_type === 'checkbox' || step.both_partners_input_type === 'checkbox' ? false : undefined,
-              partner2Checkbox: step.partner2_input_type === 'checkbox' || step.both_partners_input_type === 'checkbox' ? false : undefined,
-              finished: false
+          // Improved query to correctly get guidelines
+          const { data: stepGuidelinesData, error: guidelinesError } = await supabase
+            .from('step_guidelines')
+            .select(`
+              step_id,
+              display_order,
+              guidelines:guideline_id(id, title, content)
+            `)
+            .in('step_id', stepIds)
+            .order('display_order', { ascending: true });
+            
+          console.log('Raw Step IDs:', stepIds);
+          console.log('Raw Step Guidelines Data:', stepGuidelinesData);
+            
+          console.log('Step guidelines data:', stepGuidelinesData);
+            
+          if (guidelinesError) {
+            console.error('Guidelines error:', guidelinesError);
+            // Non-fatal error, continue without guidelines
+          } 
+
+          // Organize guidelines by step index
+          const processedGuidelinesByStep: {[key: number]: Guideline[]} = {};
+            
+          // Initialize guidelinesByStep with empty arrays for all step indexes
+          if (stepsData) {
+            stepsData.forEach((step, idx) => {
+              processedGuidelinesByStep[idx] = [];
+            });
+          }
+            
+          // Debug: Log all steps and guidelines data
+          console.log('All steps:', stepsData?.map(s => ({ id: s.id, order_index: s.order_index, idx: stepsData.findIndex(st => st.id === s.id) })));
+          console.log('All step-guideline entries:', stepGuidelinesData);
+            
+          // First check if any data is missing
+          if (!stepGuidelinesData || stepGuidelinesData.length === 0) {
+            console.warn('No step guidelines data found!');
+          }
+            
+          if (!stepsData || stepsData.length === 0) {
+            console.warn('No steps data found!');
+          }
+            
+          // Process the guideline data
+          if (stepGuidelinesData) {
+            for (const sg_item of stepGuidelinesData) { // Use for...of to allow await inside
+              const stepDBId = sg_item.step_id; // The ID of the step this guideline belongs to
+              // Ensure guidelineDataFromJoin is treated as a single object
+              const guidelineDataFromJoin = Array.isArray(sg_item.guidelines) ? sg_item.guidelines[0] : sg_item.guidelines;
+
+              const stepArrayIndex = stepsData?.findIndex(step => step.id === stepDBId);
+
+              if (stepArrayIndex === undefined || stepArrayIndex === -1) {
+                console.warn(`[GuidelineProcessing] Guideline's step_id ${stepDBId} not found in fetched stepsData. Skipping this guideline. Item:`, sg_item);
+                continue; // Use continue with for...of
+              }
+
+              // Specific logging for step 0
+              if (stepArrayIndex === 0) {
+                console.log(`[GuidelineProcessing_Step0] Attempting to process item for step 0 (step_id: ${stepDBId}). Joined guideline data:`, guidelineDataFromJoin, "Full item:", sg_item);
+              }
+
+              if (guidelineDataFromJoin && guidelineDataFromJoin.id) { // Ensure the joined guideline has an ID at least
+                let finalContent = guidelineDataFromJoin.content || '';
+                
+                // Check if content is a filename (e.g., ends with .html)
+                if (typeof finalContent === 'string' && finalContent.endsWith('.html')) {
+                  try {
+                    const response = await fetch(`/guidelines/${finalContent}`); // Path relative to public folder
+                    if (response.ok) {
+                      finalContent = await response.text();
+                    } else {
+                      console.error(`Error fetching HTML file ${finalContent}: ${response.statusText}`);
+                      finalContent = `<p>Error loading guideline content from file: ${finalContent}. Status: ${response.statusText}</p>`; // Fallback content
+                    }
+                  } catch (fetchError) {
+                    console.error(`Network error fetching HTML file ${finalContent}:`, fetchError);
+                    finalContent = `<p>Network error loading guideline content from file: ${finalContent}</p>`; // Fallback content
+                  }
+                }
+
+                const actualGuideline: Guideline = {
+                  id: guidelineDataFromJoin.id,
+                  title: guidelineDataFromJoin.title || `Guideline (ID: ${guidelineDataFromJoin.id})`, // Default title if null
+                  content: finalContent
+                };
+
+                if (!processedGuidelinesByStep[stepArrayIndex]) { // This should be pre-initialized
+                  console.error(`[GuidelineProcessing] stepArrayIndex ${stepArrayIndex} was not pre-initialized in processedGuidelinesByStep! This is a bug.`);
+                  processedGuidelinesByStep[stepArrayIndex] = [];
+                }
+                processedGuidelinesByStep[stepArrayIndex].push(actualGuideline);
+
+                if (stepArrayIndex === 0) {
+                  console.log(`[GuidelineProcessing_Step0] Added guideline for step 0:`, actualGuideline);
+                } else {
+                  // console.log(`[GuidelineProcessing] Added guideline for step ${stepArrayIndex}:`, actualGuideline);
+                }
+              } else {
+                // Handle cases where guidelineDataFromJoin or its id is missing, especially for step 0 debugging
+                if (stepArrayIndex === 0) {
+                  console.log(`[GuidelineProcessing_Step0] Joined guideline data missing or invalid for step 0. Item:`, sg_item);
+                }
+                // console.warn(`[GuidelineProcessing] Joined guideline data missing or invalid. Item:`, sg_item);
+              }
             }
-          })
-          
+          }
+          setStepGuidelines(processedGuidelinesByStep);
+
+          // Load responses from sessionStorage
           // Retrieve any existing responses from sessionStorage
           if (typeof window !== 'undefined') { // Check if we're in the browser
             try {
@@ -152,6 +255,26 @@ const ExercisePage = () => {
               console.warn('Could not load previous responses:', responseErr)
             }
           }
+          
+          // Combine exercise with its steps
+          const fullExercise = {
+            ...exerciseData,
+            steps: stepsData || []
+          } as Exercise
+          setExercise(fullExercise)
+          
+          // Create initial inputs object with empty responses for each step
+          const initialInputs: {[key: string]: PartnerResponse} = {}
+          fullExercise.steps.forEach((step: ExerciseStep, index: number) => {
+            initialInputs[index] = {
+              // Initialize with empty values based on the input types
+              partner1Text: step.partner1_input_type === 'text' ? '' : undefined,
+              partner2Text: step.partner2_input_type === 'text' ? '' : undefined,
+              partner1Checkbox: step.partner1_input_type === 'checkbox' || step.both_partners_input_type === 'checkbox' ? false : undefined,
+              partner2Checkbox: step.partner2_input_type === 'checkbox' || step.both_partners_input_type === 'checkbox' ? false : undefined,
+              finished: false
+            }
+          })
           
           setPartnerInputs(initialInputs)
         } catch (err: any) {
@@ -281,6 +404,17 @@ const ExercisePage = () => {
     }
   }
   
+  // Handle guideline link click
+  const handleGuidelineClick = (guideline: Guideline) => {
+    setSelectedGuideline(guideline);
+    setIsModalOpen(true);
+  }
+  
+  // Close the guideline modal
+  const closeGuidelineModal = () => {
+    setIsModalOpen(false);
+  }
+  
   // Define a type for history items
   type HistoryItem = {
     stepIndex: number;
@@ -352,6 +486,21 @@ const ExercisePage = () => {
               {currentStep?.activity || 'Loading activity...'}
             </h2>
             <p className="text-neutral-600 mb-4">{currentStep?.description || 'Loading description...'}</p>
+            
+            {/* Simple guidelines rendering with better debug */}
+            {console.log('Current step index:', currentStepIndex)}
+            {console.log('Step guidelines keys:', Object.keys(stepGuidelines))}
+            {console.log('Guidelines for step 0:', stepGuidelines[0])}
+            {console.log('Guidelines for current step:', stepGuidelines[currentStepIndex])}
+            
+            {/* Show guidelines if they exist for this step index */}
+            {Array.isArray(stepGuidelines[currentStepIndex]) && stepGuidelines[currentStepIndex].length > 0 && (
+              <GuidelineLinks 
+                guidelines={stepGuidelines[currentStepIndex]} 
+                onGuidelineClick={handleGuidelineClick} 
+              />
+            )}
+            
             <div className="flex items-center gap-2 text-sm text-neutral-500">
               <span className="bg-neutral-100 px-2 py-1 rounded">{currentStep?.how_much || ''}</span>
               <span>•</span>
@@ -525,6 +674,16 @@ const ExercisePage = () => {
         </div>
       )}
       </div>
+      
+      {/* Guideline Modal */}
+      {selectedGuideline && (
+        <GuidelineModal
+          isOpen={isModalOpen}
+          onClose={closeGuidelineModal}
+          title={selectedGuideline.title}
+          content={selectedGuideline.content}
+        />
+      )}
     </div>
   )
 }

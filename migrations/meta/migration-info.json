@@ -1,0 +1,19 @@
+{
+  "migrations": [
+    {
+      "version": "1_create_schema_migrations",
+      "description": "Creates a table to track applied migrations",
+      "requires_js": false
+    },
+    {
+      "version": "2_create_guidelines_tables",
+      "description": "Creates guidelines and step_guidelines tables",
+      "requires_js": false
+    },
+    {
+      "version": "3_insert_guideline_data", 
+      "description": "Inserts initial guideline data and links them to exercise steps",
+      "requires_js": true
+    }
+  ]
+}

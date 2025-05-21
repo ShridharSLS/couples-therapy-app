@@ -39,7 +39,21 @@ module.exports = {
         // Add explicit white color
         white: '#ffffff',
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            table: {
+              width: '100%',
+            },
+            th: {
+              fontWeight: theme('fontWeight.bold'),
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
